@@ -123,7 +123,7 @@ sudo virt-customize \
   --run-command "useradd -m -G sudo -s /usr/bin/bash ubuntu" \
   --run-command "dpkg-reconfigure openssh-server" \
   --run-command "sed -i 's/^ChallengeResponseAuthentication.*/ChallengeResponseAuthentication yes/g' /etc/ssh/sshd_config" \
-  --password ubuntu:password:SpankW00 \
+  --password ubuntu:password:ubuntu \
   --hostname ${VMNAME}
 ```
 
