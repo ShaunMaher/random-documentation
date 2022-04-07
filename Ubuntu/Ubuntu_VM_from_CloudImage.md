@@ -84,12 +84,12 @@ if [[ $(lsb_release -a) =~ Ubuntu ]]; then export OMVF="/usr/share/OVMF/OVMF_COD
 
 ### Download and customise a suitable network configuration
 #### For DHCP
-* Hypervisor creates enp1s0 **(probably this one)**: Ubuntu_VM_from_CloudImage/netplan_template_dhcp_enp1s0.yaml
-* Hypervisor creates enp2s1 (ubuntu 16.04 does this): Ubuntu_VM_from_CloudImage/netplan_template_dhcp_enp2s1.yaml
+* Hypervisor creates enp1s0 **(probably this one)**: [01-manual-configuration.yaml](Ubuntu_VM_from_CloudImage/netplan_template_dhcp_enp1s0/01-manual-configuration.yaml)
+* Hypervisor creates enp2s1 (ubuntu 16.04 does this): [01-manual-configuration.yaml](Ubuntu_VM_from_CloudImage/netplan_template_dhcp_enp2s1/01-manual-configuration.yaml)
 
 #### For Static IPs
-* Hypervisor creates enp1s0 **(probably this one)**: Ubuntu_VM_from_CloudImage/netplan_template_static_enp1s0.yaml
-* Hypervisor creates enp2s1 (ubuntu 16.04 does this): Ubuntu_VM_from_CloudImage/netplan_template_static_enp2s1.yaml
+* Hypervisor creates enp1s0 **(probably this one)**: [01-manual-configuration.yaml](Ubuntu_VM_from_CloudImage/netplan_template_static_enp1s0/01-manual-configuration.yaml)
+* Hypervisor creates enp2s1 (ubuntu 16.04 does this): [01-manual-configuration.yaml][Ubuntu_VM_from_CloudImage/netplan_template_static_enp2s1/01-manual-configuration.yaml.yaml
 
 ### Set Hostname, Create a sudo enabled "ubuntu" user, set the password for the "ubuntu" user, inject the network configuration
 ```
