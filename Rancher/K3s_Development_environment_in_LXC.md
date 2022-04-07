@@ -201,7 +201,7 @@ spec:
 ```
 
 ## *Optional:* Add your current user (host) into the container (mapping UIDs/GIDs)
-*Reference:* https://ubuntu.com/blog/custom-user-mappings-in-lxd-containers
+**Reference:** https://ubuntu.com/blog/custom-user-mappings-in-lxd-containers
 
 ```
 lxc config set ${CNAME} security.idmap.isolated true
