@@ -69,3 +69,6 @@ Ideally:
 
 ## Next Steps
 **TODO**
+
+* Install Longhorn for HA persistant storage
+* Install the "monitoring" package
