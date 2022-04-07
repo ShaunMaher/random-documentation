@@ -84,10 +84,12 @@ if [[ $(lsb_release -a) =~ Ubuntu ]]; then export OMVF="/usr/share/OVMF/OVMF_COD
 
 ### Download and customise a suitable network configuration
 #### For DHCP
-TODO
+* Hypervisor creates enp1s0 **(probably this one)**: Ubuntu_VM_from_CloudImage/netplan_template_dhcp_enp1s0.yaml
+* Hypervisor creates enp2s1 (ubuntu 16.04 does this): Ubuntu_VM_from_CloudImage/netplan_template_dhcp_enp2s1.yaml
 
 #### For Static IPs
-TODO
+* Hypervisor creates enp1s0 **(probably this one)**: Ubuntu_VM_from_CloudImage/netplan_template_static_enp1s0.yaml
+* Hypervisor creates enp2s1 (ubuntu 16.04 does this): Ubuntu_VM_from_CloudImage/netplan_template_static_enp2s1.yaml
 
 ### Set Hostname, Create a sudo enabled "ubuntu" user, set the password for the "ubuntu" user, inject the network configuration
 ```
@@ -102,10 +104,30 @@ sudo virt-customize \
 ```
 
 ### Download and customise a VM definition
-TODO
+TODO: I thing I could make it so that both templates put the network interface at the same PCIe address but that's a future problem.
+
+Download one of the following and save it as "`template.xml`"
+* Redhat/CentOS 7 / Ubuntu 18.04+: Ubuntu_VM_from_CloudImage/libvirt_template_ubuntu_redhat.xml
+* Ubuntu 16.04: Ubuntu_VM_from_CloudImage/libvirt_template_ubuntu_ubuntu.xml
 
 ```
 envsubst <template.xml | sudo tee ${VMNAME}.xml
 dd if=/dev/zero of=VARS.fd bs=1 count=131072
 ```
 
+### *Optional:* Cloud-Init
+TODO
+
+## Define the VM in LibVirt
+```
+virsh define ${VMNAME}.xml
+```
+
+## Start the VM
+```
+virsh start ${VMNAME}
+```
+### Connect to the VM's console (virtual serial interface) from the host
+```
+virsh console ${VMNAME}
+```

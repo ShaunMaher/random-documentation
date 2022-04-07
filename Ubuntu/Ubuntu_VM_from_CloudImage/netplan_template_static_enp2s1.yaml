@@ -1,0 +1,12 @@
+# This is the network config template for manual network configuration
+# See https://netplan.io/examples/ for examples
+network:
+  ethernets:
+    enp2s1:
+      addresses:
+        - 10.192.8.22/23
+      gateway4: 10.192.8.1
+      nameservers:
+        search: [local]
+        addresses: [1.1.1.1, 8.8.8.8]
+  version: 2
