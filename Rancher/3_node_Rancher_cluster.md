@@ -55,6 +55,23 @@ Ideally:
 **When you get to the "*Optional:* Cloud-Init" section, return to this page for example cloud-init configuration files.**
 
 ### Cloud-Init
+These cloud-init files include:
+* Install the "helm-stable" package repository
+* Run the equivelant of "apt update" on first boot
+* Run the equivelant of "apt upgrade" on first boot
+* Install the following packages:
+  * helm
+  * openssh-server
+  * avahi-daemon
+  * vim-tiny
+  * ufw
+* Drop in a RKE2 configuration template with some values pre-filled
+* Add a 10GiB swap file in /
+
+These cloud-init files do <u>not</u>:
+* Actually bootstrap the RKE2 cluster.  We will do that manually, when we're
+  ready, maybe after testing things a bit first.
+
 * For Node 1:
   * [user-data](3_node_Rancher_cluster/node1/user-data)
   * [meta-data](3_node_Rancher_cluster/node1/user-data)
@@ -64,6 +81,9 @@ Ideally:
 * For Node 3:
   * [user-data](3_node_Rancher_cluster/node3/user-data)
   * [meta-data](3_node_Rancher_cluster/node3/user-data)
+
+## Test DNS configuration
+**TODO**
 
 ## Bootstrap the RKE2 cluster
 **TODO**

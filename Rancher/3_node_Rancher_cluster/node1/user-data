@@ -17,6 +17,7 @@ packages:
   - openssh-server
   - avahi-daemon
   - vim-tiny
+  - ufw
 
 write_files:
   - path: /etc/rancher/rke2/config_template.yaml
