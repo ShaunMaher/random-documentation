@@ -68,7 +68,7 @@ These cloud-init files include:
 * Drop in a RKE2 configuration template with some values pre-filled
 * Add a 10GiB swap file in /
 
-These cloud-init files do <u>not</u>:
+These cloud-init files do __*not*__:
 * Actually bootstrap the RKE2 cluster.  We will do that manually, when we're
   ready, maybe after testing things a bit first.
 
