@@ -8,10 +8,12 @@ This implementation should still be a very usable single node development
 environment.
 
 ## Install LXC
-TODO
+
+**TODO**
 
 ### Increase kernel limits
 **Reference:** https://linuxcontainers.org/lxd/docs/master/production-setup/
+
 `/etc/sysctl.d/90-lxd-limits.conf`
 ```
 fs.aio-max-nr = 524288
@@ -28,8 +30,10 @@ vm.max_map_count = 262144
 Reboot the server
 
 ## Add the Microk8s profile (which we're re-purposing)
-*Reference*: https://microk8s.io/docs/lxd
+**Reference**: https://microk8s.io/docs/lxd
+
 ### For ext4
+
 ```
 lxc profile create k8s
 wget https://raw.githubusercontent.com/ubuntu/microk8s/master/tests/lxc/microk8s.profile -O microk8s.profile
@@ -38,6 +42,7 @@ rm microk8s.profile
 ```
 
 ### For zfs
+
 ```
 lxc profile create k8s
 wget https://raw.githubusercontent.com/ubuntu/microk8s/master/tests/lxc/microk8s-zfs.profile -O microk8s.profile
@@ -46,12 +51,14 @@ rm microk8s.profile
 ```
 
 ## Create the LXC container
+
 ```
 CNAME="$(hostname)-k3s"
 lxc launch -p default -p k8s ubuntu:20.04 ${CNAME}
 ```
 
 ## Configure DNS (systemd-resolve is not suitable)
+
 ```
 lxc exec ${CNAME} -- unlink /etc/resolv.conf
 lxc exec ${CNAME} -- bash -c "echo 'nameserver 1.1.1.1' > /etc/resolv.conf"
@@ -61,6 +68,7 @@ lxc exec ${CNAME} -- bash -c "echo '127.0.1.1 ${CNAME}' >> /etc/hosts"
 
 ## Install k3s into the container
 **Reference:** https://github.com/corneliusweig/kubernetes-lxd/blob/master/README-k3s.md
+
 ```
 lxc exec ${CNAME} -- apt install -y apparmor-utils avahi-daemon
 lxc exec ${CNAME} -- bash -c "echo 'L /dev/kmsg - - - - /dev/console' > /etc/tmpfiles.d/kmsg.conf"
@@ -74,6 +82,7 @@ lxc exec ${CNAME} -- k3s kubectl get pods --all-namespaces
 
 ### Shutdown script
 **Reference:** https://github.com/k3s-io/k3s/issues/2400
+
 By default, when the LXC container (or VM or OS on metal) is shut down, no
 action is taken to shut down the running containers.  This adds a huge delay to
 the shutdown process.  The following resolves the issue.
@@ -98,6 +107,7 @@ lxc exec ${CNAME} -- systemctl enable cgroup-kill-on-shutdown@k3s.service
 ```
 
 ## *Optional:* Install Helm
+
 ```
 lxc exec ${CNAME} -- snap install helm --classic
 lxc exec ${CNAME} -- bash -c "mkdir -p \${HOME}/.kube/; cat /etc/rancher/k3s/k3s.yaml > \${HOME}/.kube/config"
@@ -105,6 +115,7 @@ lxc exec ${CNAME} -- bash -c "chmod 600 \${HOME}/.kube/config"
 ```
 
 ## *Optional:* Nginx Ingress
+
 ```
 helm upgrade --install ingress-nginx ingress-nginx \
   --repo https://kubernetes.github.io/ingress-nginx \
@@ -113,12 +124,14 @@ helm upgrade --install ingress-nginx ingress-nginx \
 ```
 
 ### Issue: `svclb-ingress-nginx-controller-xxxxx` won't start
-TODO: Apply the following in a persistent manner:
+**TODO:** Apply the following in a persistent manner:
+
 ```
 echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward
 ```
 
 ## *Optional:* K8s Dashboard
+
 ```
 lxc exec ${CNAME} -- bash
 ```
@@ -162,6 +175,7 @@ k3s kubectl create -f dashboard.admin-user.yml -f dashboard.admin-user-role.yml
 ```
 
 ### Ingress (assuming you installed the Nginx ingress controller)
+
 ```
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -188,6 +202,7 @@ spec:
 
 ## *Optional:* Add your current user (host) into the container (mapping UIDs/GIDs)
 *Reference:* https://ubuntu.com/blog/custom-user-mappings-in-lxd-containers
+
 ```
 lxc config set ${CNAME} security.idmap.isolated true
 lxc config set ${CNAME} security.idmap.size 200000
@@ -196,6 +211,7 @@ lxc restart ${CNAME}
 ```
 
 ## *Optional:* Create your user (host) inside the container
+
 ```
 lxc exec ${CNAME} -- bash -c "groupadd -r k3s"
 lxc exec ${CNAME} -- bash -c "chown root:k3s /etc/rancher/k3s/k3s.yaml"
@@ -210,11 +226,13 @@ lxc exec ${CNAME} -- bash -c "chown -R $(id -u):$(id -g) /home/$(id -un)/.kube/"
 ```
 
 ## *Optional:* Map a directory in your home directory into the container
+
 ```
 lxc config device add ${CNAME} Projects disk source=/home/work/Projects path=/home/work/Projects
 ```
 
 ## *Optional:* Wrapper scripts
+
 `${HOME}/.local/bin/k3s`
 ```
 #!/usr/bin/env bash
