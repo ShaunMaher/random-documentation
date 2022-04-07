@@ -85,7 +85,7 @@ qemu-img resize focal-server-cloudimg-amd64.img 100G
 qemu-img convert -p -f qcow2 -O qcow2 -o preallocation=metadata -o cluster_size=1M focal-server-cloudimg-amd64.img focal-server-preallocated-amd64.qcow2
 ```
 
-Optional: Tar up the new image, maintaining sparseness
+### *Optional:* Tar up the new image, maintaining sparseness
 ```
 tar -czSf focal-server-preallocated-amd64.tar.gz focal-server-preallocated-amd64.qcow2
 ```
