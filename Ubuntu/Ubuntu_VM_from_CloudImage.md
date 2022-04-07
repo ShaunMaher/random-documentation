@@ -3,6 +3,8 @@
 ### Storage
 #### ZFS
 If you haven't already, create an encrypted ZFS dataset to house your VM images
+
+Assuming you created a Zpool called SSD1 by following [these steps](Zpool_Setup.md):
 ```
 sudo dd if=/dev/urandom bs=4k count=1 | sha512sum | sudo dd bs=64 count=1 of=/etc/zfs/keys/SSD1_VMs
 sudo zfs create -o encryption=aes-256-gcm -o keyformat=hex -o keylocation=file:///etc/zfs/keys/SSD1_VMs SSD1/VMs
@@ -138,16 +140,43 @@ dd if=/dev/zero of=VARS.fd bs=1 count=131072
 ```
 
 ### *Optional:* Cloud-Init
+#### Inject local files as Cloud-Init configuration files
 **Reference:** https://sumit-ghosh.com/articles/create-vm-using-libvirt-cloud-images-cloud-init/
 
 ```
-touch meta-data
-touch user-data
+touch meta-data.template
+touch user-data.template
 ```
-Make customisations. Then:
+Make any desired customisations.
+
+Use `envsubst` to replace any `${ENV_VAR}` place holders with the content of
+the relevant environent variable.
+```
+envsubst <meta-data.template | tee meta-data
+envsubst <user-data.template | tee user-data
+```
+
+Create an ISO image containing the generated files
 ```
 genisoimage -output cidata.iso -V cidata -r -J user-data meta-data
 ```
+
+#### Use a HTTP(S) URL as a source of Cloud-Init configuration files
+**Reference:** https://opensource.com/article/20/5/create-simple-cloud-init-service-your-homelab
+
+**TODO:** Flesh this out
+
+Create `10_datasource.cfg` with the following content:
+```
+# Add the datasource:
+# /etc/cloud/cloud.cfg.d/10_datasource.cfg
+
+# NOTE THE TRAILING SLASH HERE!
+datasource:
+  NoCloud:
+    seedfrom: http://ip_address:port/
+```
+Inject `10_datasource.cfg` into the image as `/etc/cloud/cloud.cfg.d/10_datasource.cfg`
 
 ## Define the VM in LibVirt
 ```
