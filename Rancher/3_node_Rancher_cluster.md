@@ -10,12 +10,12 @@ Ideally:
 
 ### Cloud-Init
 * For Node 1:
-  * [user-data](node1/user-data)
-  * [meta-data](node1/user-data)
+  * [user-data](3_node_Rancher_cluster/node1/user-data)
+  * [meta-data](3_node_Rancher_cluster/node1/user-data)
 * For Node 2:
-  * [user-data](node2/user-data)
-  * [meta-data](node2/user-data)
+  * [user-data](3_node_Rancher_cluster/node2/user-data)
+  * [meta-data](3_node_Rancher_cluster/node2/user-data)
 * For Node 3:
-  * [user-data](node3/user-data)
-  * [meta-data](node3/user-data)
+  * [user-data](3_node_Rancher_cluster/node3/user-data)
+  * [meta-data](3_node_Rancher_cluster/node3/user-data)
   
