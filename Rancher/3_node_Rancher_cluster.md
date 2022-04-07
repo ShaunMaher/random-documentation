@@ -15,7 +15,7 @@ the time to think about IP allocations.  You can either:
   * Should be excluded from the network's DHCP pool to avoid conflicts
 * Use DHCP and/or IPv6 Auto Configuration (my preference)
   * DHCP leases should be made static/persistant in your DHCP server.  Not all
-    (read cheap/simple) DHCP servers (e.g. in home routers) suppport this.
+    (read: cheap/simple) DHCP servers (e.g. in home routers) suppport this.
   * **TODO:** IPv6 Auto Configuration IPs are generally not static.  How do we
     deal with this?
 
