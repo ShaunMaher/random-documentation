@@ -6,5 +6,16 @@ Ideally:
 * The VMs should be on seperate physical hypervisors (for HA)
 * The VMs should have either static IPs or reservations in DHCP
 
+**When you get to the "*Optional:* Cloud-Init" section, return to this page for example cloud-init configuration files.
+
 ### Cloud-Init
-TODO: Create a cloud init config for pre-configuring the VM.
+* For Node 1:
+  * [user-data](node1/user-data)
+  * [meta-data](node1/user-data)
+* For Node 2:
+  * [user-data](node2/user-data)
+  * [meta-data](node2/user-data)
+* For Node 3:
+  * [user-data](node3/user-data)
+  * [meta-data](node3/user-data)
+  

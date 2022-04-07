@@ -116,7 +116,16 @@ dd if=/dev/zero of=VARS.fd bs=1 count=131072
 ```
 
 ### *Optional:* Cloud-Init
-TODO
+**Reference:** https://sumit-ghosh.com/articles/create-vm-using-libvirt-cloud-images-cloud-init/
+
+```
+touch meta-data
+touch user-data
+```
+Make customisations. Then:
+```
+genisoimage -output cidata.iso -V cidata -r -J user-data meta-data
+```
 
 ## Define the VM in LibVirt
 ```
