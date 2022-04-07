@@ -6,7 +6,7 @@ Ideally:
 * The VMs should be on seperate physical hypervisors (for HA)
 * The VMs should have either static IPs or reservations in DHCP
 
-**When you get to the "*Optional:* Cloud-Init" section, return to this page for example cloud-init configuration files.
+**When you get to the "*Optional:* Cloud-Init" section, return to this page for example cloud-init configuration files.**
 
 ### Cloud-Init
 * For Node 1:
