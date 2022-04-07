@@ -1,4 +1,6 @@
 # 3 node Rancher cluster
+Using Ubuntu and RKE2
+
 ## Setup DNS
 Your RKE2/Rancher nodes need to be able to find each other by name.  This means
 DNS.
