@@ -16,6 +16,28 @@ ExecStartPre=/usr/bin/zfs load-key SSD1/VMs
 ```
 
 ### Networking
+#### Add a bridge to your LAN (no VLAN tagging)
+A name for the bridge.  Maximum 13 characters.  VLAN interface name will be prefixed with "vl".  Bridge name will be prefixed with "br".
+```
+BRNAME="LAN"
+```
+
+The name of the physical interface (or bond) that will be connected to the bridge
+```
+PHYINT="enp0s25"
+```
+
+```
+sudo nmcli con down 'Wired connection 1'
+sudo nmcli con delete 'Wired connection 1'
+sudo nmcli con add type bridge ifname br${BRNAME} con-name br${BRNAME}
+sudo nmcli con add type bridge-slave ifname ${PHYINT} con-name ${PHYINT} master br${BRNAME}
+sudo nmcli connection modify br${BRNAME} connection.autoconnect-slaves 1
+sudo nmcli connection modify br${BRNAME} connection.autoconnect-retries 0
+sudo nmcli connection modify br${BRNAME} bridge.stp no
+sudo nmcli connection modify br${BRNAME} ipv4.method dhcp
+```
+
 #### Add an additional VLAN
 A name for the bridge.  Maximum 13 characters.  VLAN interface name will be prefixed with "vl".  Bridge name will be prefixed with "br".
 ```
