@@ -104,7 +104,7 @@ sudo virt-customize \
 ```
 
 ### Download and customise a VM definition
-TODO: I thing I could make it so that both templates put the network interface at the same PCIe address but that's a future problem.
+TODO: I think I could make it so that both templates put the network interface at the same PCIe address but that's a future problem.
 
 Download one of the following and save it as "`template.xml`"
 * Redhat/CentOS 7 / Ubuntu 18.04+: [template.xml](Ubuntu_VM_from_CloudImage/libvirt_template_ubuntu_redhat/template.xml)
