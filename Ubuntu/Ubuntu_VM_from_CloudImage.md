@@ -107,8 +107,8 @@ sudo virt-customize \
 TODO: I thing I could make it so that both templates put the network interface at the same PCIe address but that's a future problem.
 
 Download one of the following and save it as "`template.xml`"
-* Redhat/CentOS 7 / Ubuntu 18.04+: Ubuntu_VM_from_CloudImage/libvirt_template_ubuntu_redhat.xml
-* Ubuntu 16.04: Ubuntu_VM_from_CloudImage/libvirt_template_ubuntu_ubuntu.xml
+* Redhat/CentOS 7 / Ubuntu 18.04+: [template.xml](Ubuntu_VM_from_CloudImage/libvirt_template_ubuntu_redhat/template.xml)
+* Ubuntu 16.04: [template.xml](Ubuntu_VM_from_CloudImage/libvirt_template_ubuntu_ubuntu/template.xml)
 
 ```
 envsubst <template.xml | sudo tee ${VMNAME}.xml
