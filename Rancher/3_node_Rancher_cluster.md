@@ -43,6 +43,9 @@ server.
 ### LAN Router: pfSense
 **TODO**
 
+### If all else fails: `hosts` file entries
+**TODO**
+
 ## Build VMs
 Use the guide [here](../Ubuntu/Ubuntu_VM_from_CloudImage.md) to provision 3 VMs.
 
