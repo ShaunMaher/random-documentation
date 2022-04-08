@@ -79,14 +79,14 @@ These cloud-init files do __*not*__:
 
 Download the following template files:
 * For Node 1:
-  * [user-data](3_node_Rancher_cluster/node1/user-data)
-  * [meta-data](3_node_Rancher_cluster/node1/user-data)
+  * [user-data.template](3_node_Rancher_cluster/node1/user-data.template)
+  * [meta-data.template](3_node_Rancher_cluster/node1/user-data.template)
 * For Node 2:
-  * [user-data](3_node_Rancher_cluster/node2/user-data)
-  * [meta-data](3_node_Rancher_cluster/node2/user-data)
+  * [user-data.template](3_node_Rancher_cluster/node2/user-data.template)
+  * [meta-data.template](3_node_Rancher_cluster/node2/user-data.template)
 * For Node 3:
-  * [user-data](3_node_Rancher_cluster/node3/user-data)
-  * [meta-data](3_node_Rancher_cluster/node3/user-data)
+  * [user-data.template](3_node_Rancher_cluster/node3/user-data.template)
+  * [meta-data.template](3_node_Rancher_cluster/node3/user-data.template)
 
 Set the following environment variables:
 ```
