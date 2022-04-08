@@ -175,6 +175,7 @@ the relevant environent variable.
 ```
 envsubst <meta-data.template | tee meta-data
 envsubst <user-data.template | tee user-data
+envsubst <cdrom-device-template.xml | cdrom-device.xml
 ```
 
 Create an ISO image containing the generated files
