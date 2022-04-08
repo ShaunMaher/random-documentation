@@ -1,0 +1,32 @@
+# Add the Helm repository
+apt:
+  sources:
+    helm-stable.list
+      source: "deb https://baltocdn.com/helm/stable/debian/ all main"
+      keyid: 81BF 832E 2F19 CD2A A047  1959 294A C482 7C1A 168A
+      keyserver: keyserver.ubuntu.com
+
+# Run "apt update" on first boot
+package_update: true
+
+# Run "apt upgrade" on first boot
+package_upgrade: true
+
+packages:
+  - helm
+  - openssh-server
+  - avahi-daemon
+  - vim-tiny
+  - ufw
+
+write_files:
+  - path: /etc/rancher/rke2/config_template.yaml
+    content: |
+      token: ${TOKEN}
+      tls-san:
+        - ${CLUSTERNAME}
+        - ${HOSTNAME}
+
+swap:
+  filename: /swap.img
+  size: 10485760
