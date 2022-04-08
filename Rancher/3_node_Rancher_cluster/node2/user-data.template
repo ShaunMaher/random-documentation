@@ -25,7 +25,7 @@ write_files:
       token: ${TOKEN}
       tls-san:
         - ${CLUSTERNAME}
-        - ${HOSTNAME}
+        - ${VMNAME}
 
 swap:
   filename: /swap.img
