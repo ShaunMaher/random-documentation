@@ -164,10 +164,8 @@ dd if=/dev/zero of=VARS.fd bs=1 count=131072
 #### Inject local files as Cloud-Init configuration files
 **Reference:** https://sumit-ghosh.com/articles/create-vm-using-libvirt-cloud-images-cloud-init/
 
-```
 [meta-data.template](Ubuntu_VM_from_CloudImage/meta-data.template)
 [user-data.template](Ubuntu_VM_from_CloudImage/user-data.template)
-```
 Make any desired customisations.
 
 Use `envsubst` to replace any `${ENV_VAR}` place holders with the content of
