@@ -166,6 +166,7 @@ dd if=/dev/zero of=VARS.fd bs=1 count=131072
 
 * [meta-data.template](Ubuntu_VM_from_CloudImage/meta-data.template)
 * [user-data.template](Ubuntu_VM_from_CloudImage/user-data.template)
+
 Make any desired customisations.
 
 Use `envsubst` to replace any `${ENV_VAR}` place holders with the content of
