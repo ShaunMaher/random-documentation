@@ -166,7 +166,7 @@ dd if=/dev/zero of=VARS.fd bs=1 count=131072
 
 * [meta-data.template](Ubuntu_VM_from_CloudImage/meta-data.template)
 * [user-data.template](Ubuntu_VM_from_CloudImage/user-data.template)
-* [cdrom-device.xml](Ubuntu_VM_from_CloudImage/cdrom-device.xml)
+* [cdrom-device-template.xml](Ubuntu_VM_from_CloudImage/cdrom-device-template.xml)
 
 Make any desired customisations.
 
