@@ -91,7 +91,17 @@ Download the following template files:
 Set the following environment variables:
 ```
 export CLUSTERNAME="rke.ghanima.net"
+export FIRSTNODE="rke1.ghanima.net"
+```
+
+For the first node, generate a new rantom token
+```
 export TOKEN=$(dd if=/dev/urandom bs=4k count=1 | sha512sum | dd bs=64 count=1)
+```
+
+For the remaining nodes, use the token generated for the first node
+```
+export TOKEN="<the token>"
 ```
 
 ## Test DNS configuration

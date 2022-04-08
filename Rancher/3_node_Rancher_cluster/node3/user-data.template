@@ -26,6 +26,7 @@ write_files:
   - path: /etc/rancher/rke2/config_template.yaml
     content: |
       token: ${TOKEN}
+      server: https://${FIRSTNODE}:9345
       tls-san:
         - ${CLUSTERNAME}
         - ${VMNAME}
