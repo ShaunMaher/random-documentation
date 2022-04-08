@@ -165,8 +165,8 @@ dd if=/dev/zero of=VARS.fd bs=1 count=131072
 **Reference:** https://sumit-ghosh.com/articles/create-vm-using-libvirt-cloud-images-cloud-init/
 
 ```
-touch meta-data.template
-touch user-data.template
+[meta-data.template](Ubuntu_VM_from_CloudImage/meta-data.template)
+[user-data.template](Ubuntu_VM_from_CloudImage/user-data.template)
 ```
 Make any desired customisations.
 
