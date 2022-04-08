@@ -77,6 +77,7 @@ These cloud-init files do __*not*__:
 * Actually bootstrap the RKE2 cluster.  We will do that manually, when we're
   ready, maybe after testing things a bit first.
 
+Download the following template files:
 * For Node 1:
   * [user-data](3_node_Rancher_cluster/node1/user-data)
   * [meta-data](3_node_Rancher_cluster/node1/user-data)
@@ -86,6 +87,12 @@ These cloud-init files do __*not*__:
 * For Node 3:
   * [user-data](3_node_Rancher_cluster/node3/user-data)
   * [meta-data](3_node_Rancher_cluster/node3/user-data)
+
+Set the following environment variables:
+```
+export CLUSTERNAME="rke.ghanima.net"
+export TOKEN=$(dd if=/dev/urandom bs=4k count=1 | sha512sum | dd bs=64 count=1)
+```
 
 ## Test DNS configuration
 **TODO**

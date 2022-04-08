@@ -1,7 +1,8 @@
+#cloud-config
 # Add the Helm repository
 apt:
   sources:
-    helm-stable.list
+    helm-stable.list:
       source: "deb https://baltocdn.com/helm/stable/debian/ all main"
       keyid: 81BF 832E 2F19 CD2A A047  1959 294A C482 7C1A 168A
       keyserver: keyserver.ubuntu.com
@@ -12,6 +13,7 @@ package_update: true
 # Run "apt upgrade" on first boot
 package_upgrade: true
 
+# Install useful packages
 packages:
   - helm
   - openssh-server
@@ -19,6 +21,7 @@ packages:
   - vim-tiny
   - ufw
 
+# Drop in a config for Rancher with pre-generated token
 write_files:
   - path: /etc/rancher/rke2/config_template.yaml
     content: |
@@ -27,6 +30,16 @@ write_files:
         - ${CLUSTERNAME}
         - ${VMNAME}
 
+# Add a 10GiB Swap file (maybe make this a partition in future)
 swap:
   filename: /swap.img
   size: 10485760
+
+# Create a default 'ubuntu' sudo enabled user.
+users:
+  - name: ubuntu
+    primary_group: ubuntu
+    groups: sudo
+    # Set password to 'ubuntu'.  Change this once deployed.
+    passwd: $6$rounds=4096$mFVbyJ93Uoeno$G6Eev2Rm/3FkT/9UBqjBc8x3upSqKL40bpSM9h57fyPZtNsH3Q6uQieMV.IcxQT3vdaNdK0le9j25soFkQC6H0
+    lock_passwd: false

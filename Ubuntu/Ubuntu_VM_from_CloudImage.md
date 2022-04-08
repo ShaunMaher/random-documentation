@@ -74,7 +74,8 @@ sudo nmcli connection modify br${BRNAME} connection.autoconnect-retries 0
 
 ### Install Libvirt and Qemu
 ```
-sudo apt install libvirt-daemon libvirt-daemon-driver-qemu qemu-kvm
+sudo apt install libvirt-daemon libvirt-daemon-driver-qemu qemu-kvm libvirt-daemon-system
+sudo usermod -a -G libvirt $(id -u -n)
 ```
 
 
@@ -179,6 +180,7 @@ envsubst <user-data.template | tee user-data
 Create an ISO image containing the generated files
 ```
 genisoimage -output cidata.iso -V cidata -r -J user-data meta-data
+sudo virsh attach-device ${VMNAME} --config cdrom-device.xml
 ```
 
 #### Use a HTTP(S) URL as a source of Cloud-Init configuration files
