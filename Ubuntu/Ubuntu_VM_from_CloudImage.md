@@ -72,6 +72,12 @@ sudo nmcli connection modify br${BRNAME} connection.autoconnect-slaves 1
 sudo nmcli connection modify br${BRNAME} connection.autoconnect-retries 0
 ```
 
+### Install Libvirt and Qemu
+```
+sudo apt install libvirt-daemon libvirt-daemon-driver-qemu qemu-kvm
+```
+
+
 ## Build the initial VM image
 Create a temporary location or create a temporary ZFS dataset
 ```
@@ -104,7 +110,7 @@ sudo tar -xzSf focal-server-preallocated-amd64.tar.gz
 ## Create the destination storage location for the VM
 
 ```
-sudo zfs create SSD1/VMs/machines/<vmname>
+sudo zfs create -o recordsize=1M SSD1/VMs/machines/<vmname>
 cd /var/lib/libvirt/machines/<vmname>
 ```
 
