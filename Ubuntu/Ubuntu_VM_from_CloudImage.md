@@ -6,6 +6,7 @@ If you haven't already, create an encrypted ZFS dataset to house your VM images
 
 Assuming you created a Zpool called SSD1 by following [these steps](Zpool_Setup.md):
 ```
+mkdir -p /etc/zfs/keys/
 sudo dd if=/dev/urandom bs=4k count=1 | sha512sum | sudo dd bs=64 count=1 of=/etc/zfs/keys/SSD1_VMs
 sudo zfs create -o encryption=aes-256-gcm -o keyformat=hex -o keylocation=file:///etc/zfs/keys/SSD1_VMs SSD1/VMs
 sudo mkdir /etc/systemd/system/zfs-mount.service.d
@@ -15,6 +16,11 @@ sudo vim /etc/systemd/system/zfs-mount.service.d/load-key.conf
 ```
 [Service] 
 ExecStartPre=/usr/bin/zfs load-key SSD1/VMs
+```
+
+```
+sudo zfs create -o mountpoint=/var/lib/libvirt/machines SSD1/VMs/machines
+sudo zfs create -o mountpoint=/etc/libvirt -o overlay=on SSD1/VMs/config
 ```
 
 ### Networking
@@ -95,6 +101,13 @@ To extract this image from the tar at a later date, again maintaining sparseness
 sudo tar -xzSf focal-server-preallocated-amd64.tar.gz
 ```
 
+## Create the destination storage location for the VM
+
+```
+sudo zfs create SSD1/VMs/machines/<vmname>
+cd /var/lib/libvirt/machines/<vmname>
+```
+
 ## Customise the image
 Setup some environment variables that will be used in later commands
 ```
@@ -123,6 +136,7 @@ sudo virt-customize \
   --run-command "useradd -m -G sudo -s /usr/bin/bash ubuntu" \
   --run-command "dpkg-reconfigure openssh-server" \
   --run-command "sed -i 's/^ChallengeResponseAuthentication.*/ChallengeResponseAuthentication yes/g' /etc/ssh/sshd_config" \
+  --run-command "echo 'tmpfs /tmp tmpfs rw,nosuid,nodev' | tee -a /etc/fstab" \
   --password ubuntu:password:ubuntu \
   --hostname ${VMNAME}
 ```
