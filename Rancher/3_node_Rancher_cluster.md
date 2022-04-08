@@ -96,7 +96,7 @@ export FIRSTNODE="rke1.ghanima.net"
 
 For the first node, generate a new random token
 ```
-export TOKEN=$(dd if=/dev/urandom bs=4k count=1 | sha512sum | dd bs=64 count=1)
+export TOKEN=$(dd if=/dev/urandom bs=4k count=1 2>/dev/null | sha512sum | dd bs=64 count=1 2>/dev/null); echo "${TOKEN}"
 ```
 
 For the remaining nodes, use the token generated for the first node

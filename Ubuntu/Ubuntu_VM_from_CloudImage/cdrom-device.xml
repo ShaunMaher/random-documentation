@@ -2,5 +2,5 @@
    <driver name='qemu' type='raw' cache='none'/>
    <source file='/var/lib/libvirt/images/cidata.iso'/>
    <readonly/>
-   <target dev='hdc'/>
+   <target dev='hdc' bus='sata'/>
 </disk >
