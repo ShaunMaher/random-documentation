@@ -33,7 +33,10 @@ Here are the parts of the regex:
 * `net`: The final domain name segment of the query (3 bytes long)
 * `.`: Match any single charactor.  I think this is always a NULL and the
   Mikrotik regex parser has trouble with NULL so we just match any single byte.
-* `\\x01`: Query Class (IN)
+* `\\x01`: Query Class (IN).  This is the key to avoiding unrelated DNS
+  requests matching.  Unrelated requests might contain "ad.ghanima.net" but
+  they are unlikely to have the specific combination of "ad.ghanima.net"
+  followed by hex 01.
 
 ```
 /ip firewall layer7-protocol
