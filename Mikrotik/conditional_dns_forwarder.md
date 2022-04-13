@@ -46,6 +46,21 @@ add name=ad.ghanima.net regexp="\\x02ad\\x07ghanima\\x03net.\\x01"
 ## Mangle Rules
 The mangle rules look for packets on UDP or TCP port 53 that match the above
 Layer 7 rule and give them a unique connection mark ("ad.ghanima.net-forward").
+
+Note that we are not matching the destination IP.  This rule will inspect all
+DNS packets and intercept them even if the destination is external.  This
+means, for example, if a machine is configured to use CloudFlare's 1.1.1.1
+resolver, requests to CloudFlare that match the Layer 7 rule are still
+intercepted and redirected.
+
+(Once implemented), try it for yourself:
+```
+nslookup ad.ghanima.net 8.8.8.8
+```
+
+Note that requests made with DNS-over-TLS or DNS-over-HTTPS will NOT be
+intercepted.  This isn't a problem for my LAN, yet.
+
 ```
 /ip firewall mangle
 add action=mark-connection chain=prerouting comment="Mark TCP DNS (port 53) packets that match the ad.ghanima.net Layer 7 rule" dst-port=53 \
