@@ -26,7 +26,34 @@ server.
 * Create A or AAAA records for each VM's hostname pointing at the VM's IP.
 
 ### LAN DNS Server: Zentyal
-**TODO**
+I'm using my public FQDN (for a domain I own) as the domain that the RKE2 VMs 
+are in.  In future I might decide that this was a silly idea but for now, let's
+work with it.
+
+My Zentyal server is authoritive for the internal only sub-domain
+"ad.ghanima.net".  This is not the domain my RKE2 VMs.
+
+I don't want to add "ghanima.net" to the Zentyal server.  If I did I would
+either need to mirror all the public records in Zentyal or whenever Zentyal is
+asled about a record in this domain (e.g. mail.ghanima.net) it will
+authoritively respond that there is no such record.
+
+What we will do is create sub-domains for each desired record:
+* rke1.ghanima.net
+* rke2.ghanima.net
+* rke3.ghanima.net
+
+Each domain will have only a "Domain IP Address" (in Zentyal terminology) set.
+
+* From the Zentyal Control Panel, click **DNS** from the left side menu
+* Under **Domains** click **Add New**
+* Enter the domain name and click **Add**
+* Click the cog in the **Domain IP Addresses** column next to the domain just
+  created.
+* Click **Add New**
+* Enter the IP address of the RKE2 VM and click **Add**
+* Repeat until you have created domains for each RKE2 VM
+* Click the **Save Changes** button it the top right corner of the page
 
 ### LAN DNS Server: Samba 4 (internal or bind)
 **TODO**
