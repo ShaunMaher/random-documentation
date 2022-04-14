@@ -28,14 +28,19 @@ server.
   exists)
 * Create A or AAAA records for each VM's hostname pointing at the VM's IP.
 
-### LAN DNS Server: Zentyal (what I'll be using)
+### LAN DNS Server: Zentyal
 **TODO**
 
 ### LAN DNS Server: Samba 4 (internal or bind)
 **TODO**
 
 ### LAN Router: Mikrotik
-**TODO**
+```
+/ip dns static
+add address=172.30.1.94 name=rke1.ghanima.net ttl=1h
+add address=172.30.1.95 name=rke2.ghanima.net ttl=1h
+add address=172.30.1.93 name=rke3.ghanima.net ttl=1h
+```
 
 ### LAN Router: opnSense
 **TODO**
@@ -71,6 +76,12 @@ These cloud-init files include:
   * vim-tiny
   * ufw
 * Drop in a RKE2 configuration template with some values pre-filled
+  * In the configuration file, we insert a list of TLS SAN (Subject Alternative
+    Name) values to cover a lot of bases
+    * The common name for the cluster.  Mine will be rke.ghanima.net
+    * The name of this secific VM (from the VMNAME environment variable
+    * A short name for this specific VM (e.g. "rke1")
+    * The above short name appended with ".local" for Avahi name resolution
 * Add a 10GiB swap file in /
 
 These cloud-init files do __*not*__:
@@ -92,6 +103,7 @@ Set the following environment variables:
 ```
 export CLUSTERNAME="rke.ghanima.net"
 export FIRSTNODE="rke1.ghanima.net"
+export VMSHORTNAME="rke1"
 ```
 
 For the first node, generate a new random token

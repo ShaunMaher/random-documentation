@@ -29,6 +29,8 @@ write_files:
       tls-san:
         - ${CLUSTERNAME}
         - ${VMNAME}
+        - ${VMSHORTNAME}
+        - ${VMSHORTNAME}.local
 
 # Add a 10GiB Swap file (maybe make this a partition in future)
 swap:
