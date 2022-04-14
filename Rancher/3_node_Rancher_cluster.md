@@ -5,51 +5,8 @@ Using Ubuntu and RKE2
 Your RKE2/Rancher nodes need to be able to find each other by name.  This means
 DNS.
 
-I generally like to install and configure the Avahi Daemon so that things can
-just find each other automagically but this doesn't work for RKE2.  We need
-another solution.
-
-Unless your solution involves dynamic DNS registration (probably not), now is
-the time to think about IP allocations.  You can either:
-* Use Static IPs
-  * Should be in the same subnet as the rest of the LAN you're connecting to,
-    unless you are deliberately segregating things (e.g. in a seperate VLAN)
-  * Should be excluded from the network's DHCP pool to avoid conflicts
-* Use DHCP and/or IPv6 Auto Configuration (my preference)
-  * DHCP leases should be made static/persistant in your DHCP server.  Not all
-    (read: cheap/simple) DHCP servers (e.g. in home routers) suppport this.
-  * **TODO:** IPv6 Auto Configuration IPs are generally not static.  How do we
-    deal with this?
-
-### LAN DNS Server: Microsoft Active Directory DNS Server
-If your network already has an Active Directory, you might as well use it's DNS
-server.
-* Create a new "Forward Lookup" zone (unless the zone you want to use already
-  exists)
-* Create A or AAAA records for each VM's hostname pointing at the VM's IP.
-
-### LAN DNS Server: Zentyal
-**TODO**
-
-### LAN DNS Server: Samba 4 (internal or bind)
-**TODO**
-
-### LAN Router: Mikrotik
-```
-/ip dns static
-add address=172.30.1.94 name=rke1.ghanima.net ttl=1h
-add address=172.30.1.95 name=rke2.ghanima.net ttl=1h
-add address=172.30.1.93 name=rke3.ghanima.net ttl=1h
-```
-
-### LAN Router: opnSense
-**TODO**
-
-### LAN Router: pfSense
-**TODO**
-
-### If all else fails: `hosts` file entries
-**TODO**
+Follow the instructions [here](3_node_Rancher_cluster_DNS.md) to setup a 
+suitable DNS configuration.
 
 ## Build VMs
 Use the guide [here](../Ubuntu/Ubuntu_VM_from_CloudImage.md) to provision 3 VMs.
@@ -64,7 +21,7 @@ Ideally:
 
 **When you get to the "*Optional:* Cloud-Init" section, return to this page for example cloud-init configuration files.**
 
-### Cloud-Init
+### With Cloud-Init
 These cloud-init files include:
 * Install the "helm-stable" package repository
 * Run the equivelant of "apt update" on first boot
@@ -116,8 +73,22 @@ For the remaining nodes, use the token generated for the first node
 export TOKEN="<the token>"
 ```
 
-## Test DNS configuration
+## Without Cloud-Init
+If your hypervisor doesn't support Cloud-Init or you just don't want to use it
+for some other reason, you can follow [these manual steps instead](3_node_Rancher_cluster_no_cloud-init.md).
+
+## Pre-Bootstrap Testing
+### Test DNS name resolution
+Make sure each node and resolve and contact (ping) each other node.
+```
+ping rke1.ghanima.net
+ping rke2.ghanima.net
+ping rke3.ghanima.net
+```
+
+### Copy the configuration template to it's proper location
 **TODO**
+
 
 ## Bootstrap the RKE2 cluster
 **TODO**
