@@ -154,6 +154,8 @@ sudo ddcutil setvcp 60 17 --bus 1
 If that worked for you, your display hardware is compatible.
 
 ## USB device
+**Reference:** https://www.linuxfordevices.com/tutorials/linux/udevadm-command
+
 Start the udev monitoring tool:
 ```
 sudo udevadm monitor --kernel --property --subsystem-match=usb
