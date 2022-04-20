@@ -2,7 +2,7 @@
 ## The problem
 I have two PCs and two monitors and a single port HDMI KVM switch that toggles
 one monitor, keyboard and mouse between the PCs.  This leaves the second
-monitor that I need to press buttons on (go into the menu, select an imput)
+monitor that I need to press buttons on (go into the menu, select an input)
 whenever I toggle the KVM.
 
 ## The solution
@@ -175,7 +175,7 @@ INTERFACE=3/1/1
 MODALIAS=usb:v046DpC52Bd1211dc00dsc00dp00ic03isc01ip01in00
 SEQNUM=183078
 ```
-The PRODUCT seems to be unique to my USB dongle and corolates with the output
+The PRODUCT seems to be unique to my USB dongle and correlates with the output
 of `lsusb`:
 ```
 Bus 001 Device 049: ID 046d:c52b Logitech, Inc. Unifying Receiver
@@ -189,7 +189,15 @@ ACTION=="add", SUBSYSTEM=="usb", ENV{PRODUCT}=="46d/c52b/1211",
 
 ## Handler script
 The script that is executed on matching events can be found here:
-[2_monitor_kvm/ddcswitch](ddcswitch).
+[ddcswitch](2_monitor_kvm/ddcswitch).  Put the file in `/usr/local/bin`
 
 * Change the "PRODUCT" string on line 5
 * Change the Feature Code and values on lines 8 and 10
+
+Make the script executable:
+```
+chmod +x /usr/local/bin/ddcswitch
+```
+
+In it's default form, the script logs a lot of information to `/tmp/ddcswitch`.
+If it doesn't work right away, look to this file for clues.
