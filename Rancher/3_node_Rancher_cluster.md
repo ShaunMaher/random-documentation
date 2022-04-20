@@ -60,7 +60,7 @@ Set the following environment variables:
 ```
 export CLUSTERNAME="rke.ghanima.net"
 export FIRSTNODE="rke1.ghanima.net"
-export VMSHORTNAME="rke1"
+export VMSHORTNAME=$(echo "${VMNAME}" | awk -F "." '{print $1}')
 ```
 
 For the first node, generate a new random token
@@ -87,14 +87,127 @@ ping rke3.ghanima.net
 ```
 
 ### Copy the configuration template to it's proper location
-**TODO**
-
+```
+sudo cp /etc/rancher/rke2/config_template.yaml /etc/rancher/rke2/config.yaml
+```
 
 ## Bootstrap the RKE2 cluster
-**TODO**
+**Reference:** https://docs.rke2.io/install/ha/
+
+Run the bootstrap on the first node (only):
+```
+curl -sfL https://get.rke2.io | sudo sh -
+sudo systemctl enable rke2-server.service
+sudo systemctl start rke2-server.service
+```
+The `start` command may take a few moments to return a command prompt.  That's
+OK.  Once the service is running it's going to bootstrap the etcd cluster and 
+start a bunch of system pods.  This will take a few more minutes.
+
+You can watch it's progress by repeatedly running:
+```
+/var/lib/rancher/rke2/bin/kubectl --kubeconfig /etc/rancher/rke2/rke2.yaml get pods --all-namespaces
+```
+
+When all pods are either `Running` or `Completed`, the cluster is ready to have
+the additional nodes added.
+
+## Make sure you have a cluster, not standalone nodes
+On any node run the following:
+```
+/var/lib/rancher/rke2/bin/kubectl --kubeconfig /etc/rancher/rke2/rke2.yaml get nodes
+```
+If you don't see a list with multiple nodes, you may have forgotten the "Copy
+the configuration template to it's proper location" step.  Either way,
+something has gone wrong.
+
+## "ubuntu" user kubectl configuration
+```
+mkdir .kube
+sudo cp /etc/rancher/rke2/rke2.yaml ~/.kube/config
+sudo chown -R $(id -u):$(id -g) ~
+sudo ln -s /var/lib/rancher/rke2/bin/kubectl /usr/local/bin/kubectl
+```
+
+## OPTIONAL: Install the default Kubernetes Dashboard
+```
+GITHUB_URL=https://github.com/kubernetes/dashboard/releases
+VERSION_KUBE_DASHBOARD=$(curl -w '%{url_effective}' -I -L -s -S ${GITHUB_URL}/latest -o /dev/null | sed -e 's|.*/||')
+kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/${VERSION_KUBE_DASHBOARD}/aio/deploy/recommended.yaml
+```
+`dashboard.admin-user.yml`
+```
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: admin-user
+  namespace: kubernetes-dashboard
+```
+
+`dashboard.admin-user-role.yml`
+```
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: admin-user
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: ServiceAccount
+  name: admin-user
+  namespace: kubernetes-dashboard
+```
+
+```
+kubectl create -f dashboard.admin-user.yml -f dashboard.admin-user-role.yml
+```
+
+### OPTIONAL: Kubernetes Dashboard access via the Nginx Ingress Controller
+```
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dashboard-nginx-ingress
+  namespace: kubernetes-dashboard
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+spec:
+  rules:
+  - host: e7470-k3s.local
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: kubernetes-dashboard
+              port:
+                number: 443
+```
+
+## Install Rancher Prerequisites
+helm repo add rancher-latest https://releases.rancher.com/server-charts/latest
+kubectl create namespace cattle-system
+kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.5.1/cert-manager.crds.yaml
+helm repo add jetstack https://charts.jetstack.io
+helm repo update
+helm install cert-manager jetstack/cert-manager \
+  --namespace cert-manager \
+  --create-namespace \
+  --version v1.5.1
+```
 
 ## Install Rancher
-**TODO**
+```
+helm install rancher rancher-latest/rancher \
+  --namespace cattle-system \
+  --set hostname=rms.orro.cloud \
+  --set bootstrapPassword=admin
+```
 
 ## Next Steps
 **TODO**

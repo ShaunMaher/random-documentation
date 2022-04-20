@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+export >>/tmp/ddcswitch
+
+if [ $(echo "${PRODUCT}" | grep '46d/c52b/1211') ] && [ $(echo "${SUBSYSTEM}" | grep 'usb') ]; then
+  echo "matching device" >>/tmp/ddcswitch
+  if [ $(echo "${ACTION}" | grep "bind") ]; then
+    ddcutil setvcp 60 17 --bus 1
+  elif [ $(echo "${ACTION}" | grep "remove") ]; then
+    ddcutil setvcp 60 03 --bus 1
+  else
+    echo "Unknown action '${ACTION}'" >>/tmp/ddcswitch
+  fi
+else
+  echo "Unknown device '${PRODUCT}', '${SUBSYSTEM}'" >>/tmp/ddcswitch
+fi
+
+echo -e "\n\n" >>/tmp/ddcswitch
