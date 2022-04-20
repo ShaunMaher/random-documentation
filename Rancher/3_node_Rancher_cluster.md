@@ -212,5 +212,6 @@ helm install rancher rancher-latest/rancher \
 ## Next Steps
 **TODO**
 
+* [Install the "local-path-provisioner"](https://github.com/rancher/local-path-provisioner)
 * Install Longhorn for HA persistant storage
 * Install the "monitoring" package
