@@ -48,6 +48,7 @@ lxc exec ${CNAME} -- sudo microk8s enable dashboard
 lxc exec ${CNAME} -- sudo microk8s kubectl port-forward -n kube-system service/kubernetes-dashboard 10443:443
 lxc exec ${CNAME} -- sudo microk8s enable ingress
 lxc exec ${CNAME} -- sudo microk8s enable storage
+lxc exec ${CNAME} -- sudo microk8s enable dns
 ```
 ```
 lxc exec ${CNAME} -- sudo microk8s kubectl get pod --all-namespaces
