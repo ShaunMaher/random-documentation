@@ -1,0 +1,13 @@
+[Unit]
+Description=Unclutter hides the mouse cursor
+After=wm.target
+Requires=wm.target
+
+[Service]
+Environment="DISPLAY=:0"
+ExecStart=/usr/bin/unclutter -root -idle 5
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=default.target

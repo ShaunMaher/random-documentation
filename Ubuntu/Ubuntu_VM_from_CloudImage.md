@@ -203,6 +203,10 @@ Inject `10_datasource.cfg` into the image as `/etc/cloud/cloud.cfg.d/10_datasour
 
 ## Define the VM in LibVirt
 ```
+virsh -c qemu:///system pool-define-as $VMNAME dir - - - - "${VMDIR}"
+virsh -c qemu:///system pool-build $VMNAME
+virsh -c qemu:///system pool-start $VMNAME
+virsh -c qemu:///system pool-autostart $VMNAME
 virsh define ${VMNAME}.xml
 ```
 
