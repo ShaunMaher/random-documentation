@@ -89,23 +89,23 @@ sudo chown -R $(id -u):$(id -g) .
 
 Download the upstream image
 ```
-wget https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64.img
+wget https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img
 ```
 
 Resize the image to 100GiB and convert it to "preallocation=metadata" (for performance)
 ```
-qemu-img resize focal-server-cloudimg-amd64.img 100G
-qemu-img convert -p -f qcow2 -O qcow2 -o preallocation=metadata -o cluster_size=1M focal-server-cloudimg-amd64.img focal-server-preallocated-amd64.qcow2
+qemu-img resize jammy-server-cloudimg-amd64.img 100G
+qemu-img convert -p -f qcow2 -O qcow2 -o preallocation=metadata -o cluster_size=1M jammy-server-cloudimg-amd64.img jammy-server-preallocated-amd64.qcow2
 ```
 
 ### *Optional:* Tar up the new image, maintaining sparseness
 ```
-tar -czSf focal-server-preallocated-amd64.tar.gz focal-server-preallocated-amd64.qcow2
+tar -czSf jammy-server-preallocated-amd64.tar.gz jammy-server-preallocated-amd64.qcow2
 ```
 
 To extract this image from the tar at a later date, again maintaining sparseness:
 ```
-sudo tar -xzSf focal-server-preallocated-amd64.tar.gz
+sudo tar -xzSf jammy-server-preallocated-amd64.tar.gz
 ```
 
 ## Create the destination storage location for the VM

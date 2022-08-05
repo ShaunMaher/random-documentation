@@ -48,13 +48,13 @@ These cloud-init files do __*not*__:
 Download the following template files:
 * For Node 1:
   * [user-data.template](3_node_Rancher_cluster/node1/user-data.template)
-  * [meta-data.template](3_node_Rancher_cluster/node1/user-data.template)
+  * [meta-data.template](3_node_Rancher_cluster/node1/meta-data.template)
 * For Node 2:
   * [user-data.template](3_node_Rancher_cluster/node2/user-data.template)
-  * [meta-data.template](3_node_Rancher_cluster/node2/user-data.template)
+  * [meta-data.template](3_node_Rancher_cluster/node2/meta-data.template)
 * For Node 3:
   * [user-data.template](3_node_Rancher_cluster/node3/user-data.template)
-  * [meta-data.template](3_node_Rancher_cluster/node3/user-data.template)
+  * [meta-data.template](3_node_Rancher_cluster/node3/meta-data.template)
 
 Set the following environment variables:
 ```

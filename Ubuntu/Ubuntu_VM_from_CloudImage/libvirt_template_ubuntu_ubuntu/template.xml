@@ -2,7 +2,7 @@
   <name>${VMNAME}</name>
   <metadata>
     <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
-      <libosinfo:os id="http://ubuntu.com/ubuntu/20.04"/>
+      <libosinfo:os id="http://ubuntu.com/ubuntu/22.04"/>
     </libosinfo:libosinfo>
   </metadata>
   <memory unit='KiB'>${VMMEM}</memory>
@@ -40,7 +40,7 @@
     <emulator>${EMULATOR}</emulator>
     <disk type='file' device='disk'>
       <driver name='qemu' type='qcow2' cache='writeback'/>
-      <source file='${VMDIR}/focal-server-preallocated-amd64.qcow2'/>
+      <source file='${VMDIR}/jammy-server-preallocated-amd64.qcow2'/>
       <backingStore/>
       <target dev='vda' bus='virtio'/>
       <alias name='virtio-disk0'/>
