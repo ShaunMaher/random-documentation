@@ -1,7 +1,7 @@
 # Portainer Docker host VM (Ubuntu)
 
 ## Build VMs
-Use the guide [here](../Ubuntu/Ubuntu_VM_from_CloudImage.md) to provision 3 VMs.
+Use the guide [here](../Ubuntu/Ubuntu_VM_from_CloudImage.md) to provision a VM.
 
 Ideally:
 * The VMs should be on seperate physical hypervisors (for HA)
