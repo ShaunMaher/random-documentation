@@ -126,7 +126,7 @@ runcmd:
 # Add a 10GiB Swap file (maybe make this a partition in future)
 swap:
   filename: /swap.img
-  size: 1073741824
+  size: 10737418240
 
 # Create a default 'ubuntu' sudo enabled user.
 users:
