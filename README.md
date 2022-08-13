@@ -2,7 +2,6 @@
 title: Random Documentation
 slug: /
 ---
-# random-documentation
 Just a place to document things as I learn them.  If you find something useful, great!
 
 ## Products that might be useful, I just need to find time to evaluate
