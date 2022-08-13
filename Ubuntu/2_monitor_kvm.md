@@ -191,7 +191,7 @@ ACTION=="add", SUBSYSTEM=="usb", ENV{PRODUCT}=="46d/c52b/1211",
 
 ## Handler script
 The script that is executed on matching events can be found here:
-[ddcswitch](2_monitor_kvm/ddcswitch).  Put the file in `/usr/local/bin`
+[ddcswitch-unlink-2_monitor_kvm/ddcswitch).  Put the file in `/usr/local/bin`
 
 * Change the "PRODUCT" string on line 5
 * Change the Feature Code and values on lines 8 and 10
