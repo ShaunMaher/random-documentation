@@ -1,3 +1,7 @@
+---
+title: Cockpit over Cloudflared Tunnel
+---
+
 ## 403 error on wss://&lt;fqdn&gt;/cockpit/socket
 **Reference:** https://github.com/cockpit-project/cockpit/issues/16396
 
