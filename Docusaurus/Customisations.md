@@ -2,6 +2,19 @@
 title: Customisations
 ---
 
+## Commit to the "docs" repo (in my case "documentation/random-documentation) triggers the website build pipeline
+In the "docs" repo, create a `.gitlab-ci.yml` with the following content:
+```yaml title=".gitlab-ci.yml"
+stages:
+  - deploy
+
+deploy:
+  stage: deploy
+  trigger:
+    project: www/www.ghanima.net
+    branch: main
+```
+
 ## Automatically generate the sidebar contents for the "docs" section
 The following configuration will cause the directory structure of your "docs"
 repo get automatically turned into a navigation sidebar.  This avoids the need
