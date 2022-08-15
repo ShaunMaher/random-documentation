@@ -35,7 +35,7 @@ module.exports = {
 
 ## Remove the "Previous" and "Next" buttons from the "docs" pages
 Open `website/src/css/custom.css` and add the following:
-```js title="website/src/css/custom.css"
+```css title="website/src/css/custom.css"
 .pagination-nav {
   display: none;
 }
@@ -82,3 +82,63 @@ editUrl: ({locale, docPath}) => {
           },
 ```
 
+## Darker page footer background color
+```css title="website/src/css/custom.css"
+--ifm-footer-background-color: rgb(36, 37, 38);
+```
+
+## GitLab logo next to Gitlab link in the navigation bar
+The item in the navigation bar needs to have a className assigned as below
+("`header-gitlab-link`"):
+```js title="website/docusaurus.config.js"
+  themeConfig: {
+    navbar: {
+      ...
+      items: [
+        {
+          to: 'docs/',
+          activeBasePath: 'docs',
+          label: 'Docs',
+          position: 'left',
+        },
+        {
+          href: 'https://git.ghanima.net/explore/groups',
+          'aria-label': 'GitLab',
+          className: 'header-gitlab-link',
+          position: 'right',
+        },
+      ],
+    },
+```
+
+In custom.css you can put the svg source for the GitLab logo directly.  I stole
+the svg source from https://about.gitlab.com/images/press/logo/svg/gitlab-logo-700.svg
+and resized it with InkScape as the original has quite a bit of padding.  I also
+stripped out a bunch of extra XML that InkScape added.
+
+From the one image you can see the color of the logo's fill (`fill:#fff;`,
+`fill:#1c1e21;` or `fill:#e3e3e3;`) so we can use the same image for both light
+and dark modes, just replacing the fill colour.
+
+Then, to get the resulting XML into the correct format for including in CSS, you
+need to:
+* Replace any double quotes (`"`) with single quotes (`'`)
+* Replace the less than characters (`<`) with `%3C`
+* Replace the greater than characters (`>`) with `%3E`
+
+The result looks like:
+```css title="website/src/css/custom.css"
+.header-gitlab-link::before {
+  content: '';
+  width: 24px;
+  height: 24px;
+  display: flex;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cstyle id='style2'%3E.cls-1{fill:#1c1e21;}%3C/style%3E%3C/defs%3E%3Cg id='LOGO' transform='matrix(0.11795561,0,0,0.12041985,-10.119012,-10.899451)'%3E%3Cpath class='cls-1' d='m 282.83,170.73 -0.27,-0.69 -26.14,-68.22 a 6.81,6.81 0 0 0 -2.69,-3.24 7,7 0 0 0 -8,0.43 7,7 0 0 0 -2.32,3.52 l -17.65,54 h -71.47 l -17.65,-54 a 6.86,6.86 0 0 0 -2.32,-3.53 7,7 0 0 0 -8,-0.43 6.87,6.87 0 0 0 -2.69,3.24 L 97.44,170 l -0.26,0.69 a 48.54,48.54 0 0 0 16.1,56.1 l 0.09,0.07 0.24,0.17 39.82,29.82 19.7,14.91 12,9.06 a 8.07,8.07 0 0 0 9.76,0 l 12,-9.06 19.7,-14.91 40.06,-30 0.1,-0.08 a 48.56,48.56 0 0 0 16.08,-56.04 z' /%3E%3C/g%3E%3C/svg%3E")
+    no-repeat;
+}
+
+[data-theme='dark'] .header-gitlab-link::before {
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cstyle id='style2'%3E.cls-1{fill:#e3e3e3;}%3C/style%3E%3C/defs%3E%3Cg id='LOGO' transform='matrix(0.11795561,0,0,0.12041985,-10.119012,-10.899451)'%3E%3Cpath class='cls-1' d='m 282.83,170.73 -0.27,-0.69 -26.14,-68.22 a 6.81,6.81 0 0 0 -2.69,-3.24 7,7 0 0 0 -8,0.43 7,7 0 0 0 -2.32,3.52 l -17.65,54 h -71.47 l -17.65,-54 a 6.86,6.86 0 0 0 -2.32,-3.53 7,7 0 0 0 -8,-0.43 6.87,6.87 0 0 0 -2.69,3.24 L 97.44,170 l -0.26,0.69 a 48.54,48.54 0 0 0 16.1,56.1 l 0.09,0.07 0.24,0.17 39.82,29.82 19.7,14.91 12,9.06 a 8.07,8.07 0 0 0 9.76,0 l 12,-9.06 19.7,-14.91 40.06,-30 0.1,-0.08 a 48.56,48.56 0 0 0 16.08,-56.04 z' /%3E%3C/g%3E%3C/svg%3E")
+    no-repeat;
+}
+```
