@@ -9,7 +9,7 @@ of either manually populating the sidebar or making sure you have links to all
 your pages to make navigation possible.
 
 Replace the contents of `website/sidebars.js` with the following:
-```
+```js title="website/sidebars.js"
 module.exports = {
   docs: [
     {
@@ -22,7 +22,7 @@ module.exports = {
 
 ## Remove the "Previous" and "Next" buttons from the "docs" pages
 Open `website/src/css/custom.css` and add the following:
-```
+```js title="website/src/css/custom.css"
 .pagination-nav {
   display: none;
 }
@@ -32,7 +32,7 @@ Open `website/src/css/custom.css` and add the following:
 In `website/docusaurus.config.js` add `showLastUpdateAuthor: true` and
 `showLastUpdateTime: true` as shown below.
 
-```
+```js title="website/docusaurus.config.js"
 presets: [
     [
       '@docusaurus/preset-classic',
@@ -58,12 +58,12 @@ but is not quite right if:
 The following works for my case.
 
 In `website/docusaurus.config.js`, in the `presets` -> `docs` section, replace:
-```
+```js title="website/docusaurus.config.js"
 editUrl:
             'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
 ```
 with
-```
+```js title="website/docusaurus.config.js"
 editUrl: ({locale, docPath}) => {
             return `https://git.ghanima.net/documentation/random-documentation/-/blob/main/${docPath}`;
           },
