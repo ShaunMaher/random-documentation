@@ -28,7 +28,7 @@ Open `website/src/css/custom.css` and add the following:
 }
 ```
 
-## Show the last author and update date on a "docs" page (Note: not working yet)
+## Show the last author and update date on a "docs" page
 In `website/docusaurus.config.js` add `showLastUpdateAuthor: true` and
 `showLastUpdateTime: true` as shown below.
 
@@ -43,6 +43,10 @@ presets: [
           showLastUpdateAuthor: true,
           showLastUpdateTime: true,
 ```
+
+The build environment must have `git` installed.  If you're bulding in a
+container either make sure the container image includes git or install it as
+part of the build process.
 
 ## Modified "Edit this page" url generation function to support GitLab
 The default method Docusaurus uses to generate these links works fine for GitHub
