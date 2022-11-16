@@ -13,7 +13,7 @@ If you haven't already, create an encrypted ZFS dataset to house your VM images
 
 Assuming you created a Zpool called SSD1 by following [these steps](Zpool_Setup.md):
 ```
-mkdir -p /etc/zfs/keys/
+sudo mkdir -p /etc/zfs/keys/
 sudo dd if=/dev/urandom bs=4k count=1 | sha512sum | sudo dd bs=64 count=1 of=/etc/zfs/keys/SSD1_VMs
 sudo zfs create -o encryption=aes-256-gcm -o keyformat=hex -o keylocation=file:///etc/zfs/keys/SSD1_VMs SSD1/VMs
 sudo mkdir /etc/systemd/system/zfs-mount.service.d
