@@ -1,4 +1,8 @@
-## 403 error on wss://<fqdn>/cockpit/socket
+---
+title: Cockpit over Cloudflared Tunnel
+---
+
+## 403 error on wss://&lt;fqdn&gt;/cockpit/socket
 **Reference:** https://github.com/cockpit-project/cockpit/issues/16396
 
 Add to `/etc/cockpit/cockpit.conf` (create if it doesn't exist):

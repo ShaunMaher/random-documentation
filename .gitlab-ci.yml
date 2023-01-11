@@ -1,0 +1,8 @@
+stages:
+  - deploy
+
+deploy:
+  stage: deploy
+  trigger:
+    project: www/www.ghanima.net
+    branch: main

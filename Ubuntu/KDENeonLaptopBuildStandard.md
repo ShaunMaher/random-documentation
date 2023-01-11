@@ -173,4 +173,3 @@ sudo dd if=/dev/nvme0n1 bs=512 count=162109440 | tee >(sha256sum >/dev/stderr) |
 * Swap in /etc/fstab
 * Extra packages from [KDE Neon Work Laptop Extras](KDENeonWorkLaptopExtras.md)
 * Remove TEMP partition and make sure it's not in grub
-
