@@ -11,6 +11,7 @@
 * dmsetup
 * flatpak
 * git
+* gnome-keyring
 * kcalc
 * kexec-tools
 * mbuffer

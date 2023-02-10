@@ -15,7 +15,7 @@ Can I just use HTTPS for everything?
 ## Install the libsecret git credential helper
 ### On Ubuntu (and derivitives)
 ```
-sudo apt install libsecret-1-0 libsecret-1-dev libglib2.0-dev
+sudo apt install libsecret-1-0 libsecret-1-dev libglib2.0-dev gnome-keyring
 sudo make --directory=/usr/share/doc/git/contrib/credential/libsecret
 ```
 
