@@ -7,6 +7,24 @@ additional tasks, a hypervisor-only disrto is not quite the right fit.
 snippets into a single document.
 
 ## Host configuration
+### Networking
+I use NetworkManager for three reasons:
+* Some combination of the features I use was, in the past, impossible to achieve
+  with NetPlan.io and I haven't forgiven it
+* Inertia
+* My Neon laptops use it and having a common configuration method accross
+  platforms is nice.
+
+Anyway, here's what to do to get NetworkManager working on Ubuntu Jammy
+
+```
+sudo apt install --no-install-recommends libvirt-daemon-system libvirt-daemon-driver-qemu qemu-kvm libxml2-utils swtpm-tools ovmf
+sudo apt purge netplan.io libnetplan0:amd64 networkd-dispatcher
+sudo rm -fr /etc/netplan/
+sudo apt install network-manager
+sudo rm /usr/lib/NetworkManager/conf.d/10-glob*
+sudo systemctl restart NetworkManager
+```
 ### Storage
 #### ZFS
 If you haven't already, create an encrypted ZFS dataset to house your VM images
@@ -22,7 +40,7 @@ sudo vim /etc/systemd/system/zfs-mount.service.d/load-key.conf
 
 ```
 [Service] 
-ExecStartPre=/usr/bin/zfs load-key SSD1/VMs
+ExecStartPre=/usr/sbin/zfs load-key SSD1/VMs
 ```
 
 ```
