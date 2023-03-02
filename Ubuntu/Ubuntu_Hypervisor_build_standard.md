@@ -18,7 +18,7 @@ I use NetworkManager for three reasons:
 Anyway, here's what to do to get NetworkManager working on Ubuntu Jammy
 
 ```
-sudo apt install --no-install-recommends libvirt-daemon-system libvirt-daemon-driver-qemu qemu-kvm libxml2-utils swtpm-tools ovmf
+sudo apt install --no-install-recommends libvirt-daemon-system libvirt-daemon-driver-qemu qemu-kvm libxml2-utils swtpm-tools smartmontools ovmf
 sudo apt purge netplan.io libnetplan0:amd64 networkd-dispatcher
 sudo rm -fr /etc/netplan/
 sudo apt install network-manager
@@ -103,3 +103,7 @@ sudo apt install libvirt-daemon libvirt-daemon-driver-qemu qemu-kvm libvirt-daem
 sudo usermod -a -G libvirt $(id -u -n)
 ```
 
+## Backups
+```
+sudo apt install -y sanoid
+```
