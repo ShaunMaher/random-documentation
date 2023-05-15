@@ -158,8 +158,9 @@ sudo grub-install --bootloader-id=ubuntu --efi-directory=/boot/efi "${DEV}"
 
 Setup encrypted swap
 ```bash
-echo "swap /dev/disk/by-partlabel/SWAP /dev/urandom swap" | sudo tee -a /etc/crypttab
+echo "swap /dev/disk/by-partlabel/SWAP /dev/urandom swap,cipher=aes-cbc-essiv:sha256,size=256,plain" | sudo tee -a /etc/crypttab
 echo "/dev/mapper/swap none swap defaults 0 0" | sudo tee -a /etc/fstab
+echo "RESUME=none" |sudo tee /etc/initramfs-tools/conf.d/resume
 ```
 
 Update everything
