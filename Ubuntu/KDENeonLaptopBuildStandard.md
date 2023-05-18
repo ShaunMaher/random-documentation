@@ -196,6 +196,21 @@ sudo reboot
 You should be prompted to unplug the USB boot media during shutdown.  If not,
 unplug it during BIOS startup, before the machine boots.
 
+## Disable System Wide suspend on Laptop Lid Close
+```bash
+sudo vim /etc/systemd/logind.conf
+```
+
+Chenge this:
+```
+#HandleLidSwitchExternalPower=suspend
+```
+
+To this
+```
+HandleLidSwitchExternalPower=lock
+```
+
 ## Backup Image
 If you want to take a backup of the fresh install for re-use, consider a command
 like this:
