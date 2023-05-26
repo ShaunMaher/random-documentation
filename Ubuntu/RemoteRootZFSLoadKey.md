@@ -16,7 +16,7 @@ IP=172.30.0.203::172.30.0.1:255.255.0.0::enp0s25:off
 ```
 
 To avoid issues with mis-matching host keys with the post startup SSH server
-causing your SSH client to complain, we will setup the  initram dropbear
+causing your SSH client to complain, we will setup the initramfs dropbear
 instance to use a different port.
 ```
 sudo vim /etc/dropbear/initramfs/dropbear.conf
@@ -83,4 +83,5 @@ esac
 ```
 ```
 sudo chmod +x /etc/initramfs-tools/hooks/unlock-zfs-root.sh
+sudo update-initramfs -c -k all
 ```
