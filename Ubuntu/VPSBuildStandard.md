@@ -20,11 +20,11 @@ sudo parted "${DEV}"
 mklabel gpt
 mkpart bios_grub ext2 2048s 8M
 set 1 bios_grub on
-mkpart ESP fat32 8M 1G
+mkpart ESP fat32 8M 512M
 set 2 ESP on
-mkpart BOOT ext2 1G 3G
-mkpart SWAP linux-swap 3G 9G
-mkpart SSD1 ext2 9G 100%
+mkpart BOOT ext2 512M 2G
+mkpart SWAP linux-swap 2G 8G
+mkpart SSD1 ext2 8G 100%
 q
 ```
 
@@ -59,6 +59,7 @@ sudo zpool create -d \
                 -o feature@embedded_data=enabled \
                 -o feature@large_blocks=enabled \
                 -O mountpoint=/mnt/zfs/bpool \
+                -f \
                 bpool /dev/disk/by-partlabel/BOOT
 sudo zfs create bpool/BOOT
 sudo zfs create bpool/BOOT/ROOT
@@ -90,7 +91,9 @@ sudo zpool create -o ashift=12 \
                   -O normalization=formD \
                   -O relatime=on \
                   -O xattr=sa \
-                  -O mountpoint=/mnt/zfs/SSD1 SSD1 /dev/disk/by-partlabel/SSD1
+                  -O mountpoint=/mnt/zfs/SSD1 \
+                  -f \
+                  SSD1 /dev/disk/by-partlabel/SSD1
 sudo zfs create SSD1/OS
 sudo zfs create -o encryption=aes-256-gcm -o keyformat=passphrase -o compression=on SSD1/OS/Jammy
 sudo zfs load-key SSD1/OS/Jammy
@@ -147,6 +150,7 @@ Not relevant yet: If your hardware needs a kernel newer than the one provided
 apt install linux-image-generic-hwe-XX.XX linux-headers-generic-hwe-XX.XX
 ```
 
+**Old version**
 ```bash
 sudo apt install zfsutils-linux zfs-initramfs openssh-server linux-image-generic
 sudo apt purge snapd
@@ -162,6 +166,17 @@ echo "options zfs zfs_arc_max=134217728" >> /etc/modprobe.d/zfs.conf
 sudo update-initramfs -c -k all
 ```
 
+**New version**
+```bash
+apt update
+apt install -y zfsutils-linux zfs-initramfs openssh-server linux-image-generic
+rm -fr /etc/default/grub.d/50-cloudimg-settings.cfg
+echo -e "network:\n  ethernets:\n    enp1s0:\n      dhcp4: true\n  version: 2" >/etc/netplan/01-manual-configuration.yaml
+echo "GRUB_CMDLINE_LINUX_DEFAULT=\"'ds=nocloud-net;s=https://configuration-backups.ghanima.net/cloud-init/lu.ghanima.net/'\"" >/etc/default/grub.d/cloud-init.cfg
+echo "GRUB_TIMEOUT=5" >>/etc/default/grub.d/cloud-init.cfg
+sudo update-initramfs -c -k all
+```
+
 The following error messages are normal (we are not using dmcrypt so they are
 harmless):
 ```
@@ -170,7 +185,6 @@ cryptsetup: WARNING: Couldn't determine root device
 ```
 
 ```bash
-sudo grub-install --bootloader-id=neon --efi-directory=/boot/efi "${DEV}"
 sudo grub-install --bootloader-id=ubuntu --efi-directory=/boot/efi "${DEV}"
 ```
 
