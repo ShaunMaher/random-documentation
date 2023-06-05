@@ -13,6 +13,18 @@ Can I just use HTTPS for everything?
 **Reference:** https://gist.github.com/maelvls/79d49740ce9208c26d6a1b10b0d95b5e
 
 ## Install the libsecret git credential helper
+### On KDE Neon
+```
+sudo apt install libsecret-1-0 libsecret-1-dev libglib2.0-dev
+sudo make --directory=/usr/share/doc/git/contrib/credential/libsecret
+sudo vim /usr/share/dbus-1/services/org.freedesktop.secrets.service
+```
+```
+[D-BUS Service]
+Name=org.freedesktop.secrets
+Exec=/usr/bin/kwalletd5
+```
+
 ### On Ubuntu (and derivitives)
 ```
 sudo apt install libsecret-1-0 libsecret-1-dev libglib2.0-dev gnome-keyring
