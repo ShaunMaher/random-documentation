@@ -163,6 +163,11 @@ echo "/dev/mapper/swap none swap defaults 0 0" | sudo tee -a /etc/fstab
 echo "RESUME=none" |sudo tee /etc/initramfs-tools/conf.d/resume
 ```
 
+Limit ZFS ARC Size
+```bash
+echo "options zfs zfs_arc_max=4294967296" | sudo tee /etc/modprobe.d/zfs.config
+```
+
 Update everything
 ```bash
 apt update; apt -y full-upgrade; apt autoremove
