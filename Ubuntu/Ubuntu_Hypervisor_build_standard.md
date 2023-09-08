@@ -103,6 +103,11 @@ sudo apt install libvirt-daemon libvirt-daemon-driver-qemu qemu-kvm libvirt-daem
 sudo usermod -a -G libvirt $(id -u -n)
 ```
 
+### If you want to use Secure Boot and virtual TPM devices in VMs
+```
+sudo setfacl -m group:tss:rwx /var/lib/swtpm-localca/
+```
+
 ## Backups
 ```
 sudo apt install -y sanoid
