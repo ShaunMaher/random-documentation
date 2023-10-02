@@ -245,3 +245,4 @@ ssh ssh [user]@[some other machine] "dd if=/path/to/FreshInstall.dd.zst bs=512 |
 
 ## TODO
 * https://blog.trifork.com/2020/05/22/linux-homedir-encryption/
+* https://usbguard.github.io/
