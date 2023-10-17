@@ -216,6 +216,22 @@ To this
 HandleLidSwitchExternalPower=lock
 ```
 
+## IPv6 Valid lifetime for deprecated IPs
+
+> Work in progress
+
+All of my IPv6 addressing is allocated automatically.  Sometimes the prefixes
+assigned to each internal VLAN change.  This leaves devices with new IPv6
+addresses and deprecated addresses in different subnets and then they have
+trouble connecting to each other.  The following causes "deprecated" addresses
+to be removed after one hour, instead of one week.
+```
+printf '%s' "net.ipv6.conf.default.temp_valid_lft = 3600" >/etc/sysctl.d/11-ipv6-valid_lft.conf
+printf '%s' "net.ipv6.conf.all.temp_valid_lft = 3600" >> >/etc/sysctl.d/11-ipv6-valid_lft.conf
+```
+
+TODO: We still get routes left behind and I don't know how to fix that.
+
 ## Backup Image
 If you want to take a backup of the fresh install for re-use, consider a command
 like this:
