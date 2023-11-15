@@ -122,11 +122,13 @@ export VMNAME=$(basename "${PWD}")
 export VMDIR="${PWD}"
 export VMMEM="1048576"
 export LANIF="brLAN"
-if [[ $(lsb_release -a) =~ Ubuntu ]]; then export EMULATOR="/usr/bin/kvm-spice"; else export EMULATOR="/usr/libexec/qemu-kvm"; fi
-if [[ $(lsb_release -a) =~ Ubuntu ]]; then export OMVF="/usr/share/OVMF/OVMF_CODE.fd"; else export OMVF="/usr/share/OVMF/OVMF_CODE.secboot.fd"; fi
+export EMULATOR="/usr/bin/qemu-system-x86_64"
+export OMVF="/usr/share/OVMF/OVMF_CODE.secboot.fd"
 ```
 
 ### Download and customise a suitable network configuration
+> This configuration is now completed by cloud-init
+
 #### For DHCP
 * Hypervisor creates enp1s0 **(probably this one)**: [01-manual-configuration.yaml](Ubuntu_VM_from_CloudImage/netplan_template_dhcp_enp1s0/01-manual-configuration.yaml)
 * Hypervisor creates enp2s1 (ubuntu 16.04 does this): [01-manual-configuration.yaml](Ubuntu_VM_from_CloudImage/netplan_template_dhcp_enp2s1/01-manual-configuration.yaml)
@@ -136,9 +138,12 @@ if [[ $(lsb_release -a) =~ Ubuntu ]]; then export OMVF="/usr/share/OVMF/OVMF_COD
 * Hypervisor creates enp2s1 (ubuntu 16.04 does this): [01-manual-configuration.yaml](Ubuntu_VM_from_CloudImage/netplan_template_static_enp2s1/01-manual-configuration.yaml)
 
 ### Set Hostname, Create a sudo enabled "ubuntu" user, set the password for the "ubuntu" user, inject the network configuration
+
+> This configuration is now completed by cloud-init
+
 ```
 sudo virt-customize \
-  -a focal-server-preallocated-amd64.qcow2 \
+  -a jammy-server-preallocated-amd64.qcow2 \
   --copy-in "01-manual-configuration.yaml:/etc/netplan/" \
   --run-command "useradd -m -G sudo -s /usr/bin/bash ubuntu" \
   --run-command "dpkg-reconfigure openssh-server" \
@@ -200,6 +205,20 @@ datasource:
     seedfrom: http://ip_address:port/
 ```
 Inject `10_datasource.cfg` into the image as `/etc/cloud/cloud.cfg.d/10_datasource.cfg`
+
+##### Inject the above file without install libguestfs-tools
+```
+sudo modprobe nbd
+sudo qemu-nbd --pid-file ./qemu-nbd.pid -c /dev/nbd0 jammy-server-preallocated-amd64.qcow2
+sudo rm -fr /mnt/nbd0p1 || true
+sudo mkdir -p /mnt/nbd0p1
+sudo mount /dev/nbd0p1 /mnt/nbd0p1
+sudo cp 10_datasource.cfg /mnt/nbd0p1/etc/cloud/cloud.cfg.d/
+sudo cp 01-manual-configuration.yaml /mnt/nbd0p1/etc/netplan/
+sudo umount /mnt/nbd0p1
+sudo qemu-nbd -d jammy-server-preallocated-amd64.qcow2
+sudo kill $(sudo cat ./qemu-nbd.pid)
+```
 
 ## Define the VM in LibVirt
 ```
